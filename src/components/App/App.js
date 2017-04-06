@@ -23,16 +23,23 @@ class App extends Component {
   render() {
     const { adminLoggedIn, database } = this.state;
 
+    // this will be mapStateToProps in ExpiermentContainer in the future
+    const props = {
+      pairs: [{ string: 'mofa', video: '1.mp4' }, { string: 'blabla', video: '5.mp4' }],
+      phase: 0,
+      slide: 1
+    };
+
     return (
       <BrowserRouter>
         <div>
-          <Route exact path="/" component={ExperimentContainer} />
+          <Route exact path="/" render={() => <ExperimentContainer db={database} {...props} />} />
           <Route path="/secret-admin-login" component={AdminLogin} />
           <Route
             exact
             path="/admin-dashboard"
             render={() => (
-              adminLoggedIn ? <AdminDashboard database={database} /> :
+              adminLoggedIn ? <AdminDashboard db={database} /> :
                 <Redirect to="/secret-admin-login" />
             )}
           />
